@@ -123,24 +123,53 @@
         <div class="pm-split pm-split-h">
           <div class="pm-split pm-split-v">
             <section class="pm-panel" data-pm-region="menu" data-pm-kind="panel" id="pm-region-menu" data-pm-empty="true">
-              <div class="pm-panel-body"></div>
+              <div class="pm-panel-body">
+                <ul style="list-style:none;padding:0;margin:0;line-height:2;">
+                  <li style="background:#eee;padding:0 0.25rem;">▶ File</li>
+                  <li style="padding:0 0.25rem;">  Edit</li>
+                  <li style="padding:0 0.25rem;">  View</li>
+                  <li style="padding:0 0.25rem;">  Tools</li>
+                  <li style="padding:0 0.25rem;">  Help</li>
+                </ul>
+              </div>
             </section>
             <section class="pm-panel" data-pm-region="main" data-pm-kind="panel" id="pm-region-main" data-pm-empty="true">
-              <div class="pm-panel-body"></div>
+              <div class="pm-panel-body">
+                <p style="margin:0 0 0.5rem;font-weight:bold;">Main content area</p>
+                <p style="margin:0 0 0.4rem;color:#555;font-size:0.8rem;">This panel is the primary workspace. In a live panelmark-web application, <code>panelmark-web</code> would hydrate this placeholder with the interaction assigned to the <code>main</code> region.</p>
+                <p style="margin:0;color:#555;font-size:0.8rem;">The <code>data-pm-region="main"</code> and <code>id="pm-region-main"</code> hooks provide stable targets for JavaScript to locate and update this panel.</p>
+              </div>
             </section>
           </div>
           <div class="pm-split pm-split-h">
             <div class="pm-split pm-split-v">
               <section class="pm-panel" data-pm-region="inspector" data-pm-kind="panel" id="pm-region-inspector" data-pm-empty="true">
-                <div class="pm-panel-body"></div>
+                <div class="pm-panel-body">
+                  <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+                    <tr><td style="color:#888;padding:0.1rem 0.25rem 0.1rem 0;">region</td><td>inspector</td></tr>
+                    <tr><td style="color:#888;padding:0.1rem 0.25rem 0.1rem 0;">id</td><td>pm-region-inspector</td></tr>
+                    <tr><td style="color:#888;padding:0.1rem 0.25rem 0.1rem 0;">focusable</td><td>—</td></tr>
+                    <tr><td style="color:#888;padding:0.1rem 0.25rem 0.1rem 0;">interaction</td><td style="color:#aaa;">none assigned</td></tr>
+                  </table>
+                </div>
               </section>
               <section class="pm-panel" data-pm-region="log" data-pm-kind="panel" id="pm-region-log" data-pm-empty="true">
-                <div class="pm-panel-body"></div>
+                <div class="pm-panel-body">
+                  <div style="font-size:0.75rem;line-height:1.6;color:#555;">
+                    <div><span style="color:#aaa;">07:38:01</span> shell parsed — 5 regions resolved</div>
+                    <div><span style="color:#aaa;">07:38:01</span> render_fragment() called</div>
+                    <div><span style="color:#aaa;">07:38:01</span> HTML output written to examples/out/</div>
+                    <div><span style="color:#aaa;">07:38:01</span> filler content added manually</div>
+                    <div style="color:#aaa;">— waiting —</div>
+                  </div>
+                </div>
               </section>
             </div>
             <div class="pm-split pm-split-h">
               <section class="pm-panel" data-pm-region="status" data-pm-kind="panel" id="pm-region-status" data-pm-empty="true">
-                <div class="pm-panel-body"></div>
+                <div class="pm-panel-body" style="display:flex;align-items:center;">
+                  ✔ panelmark-html — static render complete — awaiting panelmark-web hydration
+                </div>
               </section>
             </div>
           </div>
