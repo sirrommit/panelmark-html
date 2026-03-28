@@ -108,6 +108,14 @@ class TestHeadings:
         html = render_fragment(Shell(SINGLE_PANEL))
         assert 'pm-panel-heading' not in html
 
+    def test_data_pm_heading_attribute(self):
+        html = render_fragment(Shell(HEADING))
+        assert 'data-pm-heading="My Heading"' in html
+
+    def test_no_data_pm_heading_when_absent(self):
+        html = render_fragment(Shell(SINGLE_PANEL))
+        assert 'data-pm-heading' not in html
+
 
 # ---------------------------------------------------------------------------
 # Split structure

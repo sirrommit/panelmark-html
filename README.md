@@ -52,4 +52,13 @@ pip install panelmark-html
 
 ## Status
 
-Pre-alpha. API and DOM structure are not yet stable.
+**Package maturity:** Pre-alpha. The public Python API (`render_fragment`,
+`render_document`, `get_base_css`, `HTMLRenderer`) and higher-level rendering
+features may still evolve.
+
+**Hook contract:** The region-level DOM hooks (`data-pm-region`, `id`,
+`data-pm-*` attributes) and CSS classes (`.pm-shell`, `.pm-split-*`,
+`.pm-panel`, `.pm-panel-body`) are the intended stable substrate for
+`panelmark-web` and are documented as such in
+[docs/hook-contract.md](docs/hook-contract.md).  These will not change
+without a major version bump.

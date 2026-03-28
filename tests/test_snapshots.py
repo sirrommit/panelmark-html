@@ -255,6 +255,17 @@ class TestHeadingStructure:
         )
         assert heading_idx < body_idx
 
+    def test_data_pm_heading_on_panel_element(self):
+        panels = by_class(self.elems, 'pm-panel')
+        headed = [a for a in panels if 'data-pm-heading' in a]
+        assert len(headed) == 1
+        assert headed[0]['data-pm-heading'] == 'Panel Title'
+
+    def test_data_pm_heading_absent_when_no_heading(self):
+        elems = collect(render_fragment(Shell(SINGLE)))
+        panels = by_class(elems, 'pm-panel')
+        assert all('data-pm-heading' not in a for a in panels)
+
 
 # ---------------------------------------------------------------------------
 # Interaction metadata ordering in attributes

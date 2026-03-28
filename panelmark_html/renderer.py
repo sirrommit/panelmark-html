@@ -136,6 +136,9 @@ class HTMLRenderer:
             attrs.append('data-pm-kind="panel"')
             attrs.append(f'id="pm-region-{escape(node.name, quote=True)}"')
 
+            if node.heading:
+                attrs.append(f'data-pm-heading="{escape(node.heading, quote=True)}"')
+
             interaction = shell.interactions.get(node.name)
             if interaction is not None:
                 cls = type(interaction)

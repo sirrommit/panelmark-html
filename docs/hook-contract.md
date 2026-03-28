@@ -51,13 +51,15 @@ CSS classes.
 | Part | Stability |
 |------|-----------|
 | `class="pm-split"` | **Stable** |
-| `class="pm-split-h"` | **Stable** |
-| `class="pm-split-v"` | **Stable** |
+| `class="pm-split-h"` | **Stable** — column (stacked) layout |
+| `class="pm-split-v"` | **Stable** — row (side-by-side) layout |
 | Element tag (`div`) | Presentation |
-| Nesting depth and order | **Stable** — mirrors the parsed layout tree |
+| Exact nesting depth and order | Presentation — may be optimised in future releases |
 
 Split containers are structural scaffolding.  `panelmark-web` should not
-attach behavior to them directly; use panel-level hooks instead.
+attach behavior to them directly; use panel-level hooks instead.  The class
+semantics (`.pm-split-h` = column, `.pm-split-v` = row) are stable, but the
+exact tree of nested split elements is not part of the API contract.
 
 ---
 
@@ -72,6 +74,7 @@ element.
   data-pm-region="sidebar"
   data-pm-kind="panel"
   id="pm-region-sidebar"
+  data-pm-heading="Sidebar"    <!-- when a heading is defined -->
   data-pm-empty="true"         <!-- when no interaction is assigned -->
 >
   <header class="pm-panel-heading">Sidebar</header>   <!-- if heading defined -->
@@ -87,6 +90,7 @@ element.
 | `data-pm-region="<name>"` | Named panels only | **Stable** |
 | `id="pm-region-<name>"` | Named panels only | **Stable** |
 | `data-pm-kind="panel"` | Named panels only | **Stable** |
+| `data-pm-heading="<text>"` | Named panel with a heading defined | **Stable** |
 | `data-pm-empty="true"` | Named panel, no interaction assigned | **Stable** |
 | Element tag (`section`) | — | Presentation |
 
@@ -233,8 +237,8 @@ The following are internal rendering choices that may change in any release:
 - Whitespace and indentation in the rendered HTML
 - The exact default values of CSS custom properties
 - The order of CSS rules within the base stylesheet
-- The structure of split containers (the nesting shape may be optimised in
-  future releases, but the panel-level hooks will remain stable)
+- The exact nesting depth and order of split containers (the class semantics
+  are stable; the specific tree of `pm-split` elements is not)
 
 ---
 
@@ -250,6 +254,7 @@ const panel = document.querySelector('[data-pm-region="sidebar"]');
 const interactionClass = panel.dataset.pmInteraction;  // e.g. "...MenuReturn"
 const isFocusable      = panel.dataset.pmFocusable === 'true';
 const isEmpty          = 'pmEmpty' in panel.dataset;
+const heading          = panel.dataset.pmHeading;      // undefined if no heading
 
 // 3. Update the body only
 const body = panel.querySelector('.pm-panel-body');
