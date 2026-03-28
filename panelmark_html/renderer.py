@@ -8,9 +8,14 @@ from .css import get_base_css
 class HTMLRenderer:
     """Converts a panelmark Shell into an HTML fragment or full document.
 
-    Phase 2 scope: structural rendering only — splits, panels, headings, and
-    stable DOM hooks.  Interaction metadata hooks are added in Phase 4.
-    CSS rules are provided by get_base_css() (Phase 3).
+    Renders the shell's panel structure with stable DOM hooks.  Each named
+    panel that has an assigned interaction receives ``data-pm-interaction``,
+    ``data-pm-focusable``, and ``data-pm-focused`` attributes.  Named panels
+    without an assigned interaction receive ``data-pm-empty="true"``.  Panel
+    bodies are always empty placeholders; interaction body content is deferred
+    to ``panelmark-web``.
+
+    CSS rules are provided by ``get_base_css()``.
     """
 
     def render_fragment(self, shell, *, include_css: bool = False) -> str:
@@ -88,20 +93,20 @@ class HTMLRenderer:
         node = shell.layout.root
         if node is None:
             return '<div class="pm-shell" data-pm-shell></div>\n'
-        inner = self._render_node(node, indent=2)
+        inner = self._render_node(node, shell, indent=2)
         return f'<div class="pm-shell" data-pm-shell>\n{inner}</div>\n'
 
-    def _render_node(self, node, indent: int = 0) -> str:
+    def _render_node(self, node, shell, indent: int = 0) -> str:
         if node is None:
             return ''
         pad = ' ' * indent
 
         if isinstance(node, Panel):
-            return self._render_panel(node, indent)
+            return self._render_panel(node, shell, indent)
 
         if isinstance(node, VSplit):
-            left = self._render_node(node.left, indent + 2)
-            right = self._render_node(node.right, indent + 2)
+            left = self._render_node(node.left, shell, indent + 2)
+            right = self._render_node(node.right, shell, indent + 2)
             return (
                 f'{pad}<div class="pm-split pm-split-v">\n'
                 f'{left}'
@@ -110,8 +115,8 @@ class HTMLRenderer:
             )
 
         if isinstance(node, HSplit):
-            top = self._render_node(node.top, indent + 2)
-            bottom = self._render_node(node.bottom, indent + 2)
+            top = self._render_node(node.top, shell, indent + 2)
+            bottom = self._render_node(node.bottom, shell, indent + 2)
             return (
                 f'{pad}<div class="pm-split pm-split-h">\n'
                 f'{top}'
@@ -121,7 +126,7 @@ class HTMLRenderer:
 
         return ''
 
-    def _render_panel(self, node: Panel, indent: int = 0) -> str:
+    def _render_panel(self, node: Panel, shell, indent: int = 0) -> str:
         pad = ' ' * indent
         inner = ' ' * (indent + 2)
 
@@ -130,6 +135,18 @@ class HTMLRenderer:
             attrs.append(f'data-pm-region="{escape(node.name, quote=True)}"')
             attrs.append('data-pm-kind="panel"')
             attrs.append(f'id="pm-region-{escape(node.name, quote=True)}"')
+
+            interaction = shell.interactions.get(node.name)
+            if interaction is not None:
+                cls = type(interaction)
+                qualified = f'{cls.__module__}.{cls.__qualname__}'
+                focusable = 'true' if interaction.is_focusable else 'false'
+                focused = 'true' if shell.focus == node.name else 'false'
+                attrs.append(f'data-pm-interaction="{escape(qualified, quote=True)}"')
+                attrs.append(f'data-pm-focusable="{focusable}"')
+                attrs.append(f'data-pm-focused="{focused}"')
+            else:
+                attrs.append('data-pm-empty="true"')
 
         lines = [f'{pad}<section {" ".join(attrs)}>\n']
 
