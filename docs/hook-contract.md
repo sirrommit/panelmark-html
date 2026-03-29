@@ -221,9 +221,15 @@ them in your own stylesheet to theme the shell without modifying
 | `--pm-radius` | `0px` | Corner radius on panels |
 | `--pm-heading-font-weight` | `bold` | Heading font weight |
 | `--pm-panel-padding` | `0.5rem` | Padding inside body and heading |
+| `--pm-focused-border-color` | `#4a9eff` | Outline colour on the focused panel |
+| `--pm-focused-border-width` | `2px` | Outline thickness on the focused panel |
 
 All properties are defined on `:root` in the base stylesheet and inherit
 into panels automatically.
+
+The `--pm-focused-*` properties control the `[data-pm-focused="true"]` rule.
+`panelmark-html` emits `data-pm-focused` as a static snapshot; live updates
+are the responsibility of `panelmark-web`.
 
 ---
 
