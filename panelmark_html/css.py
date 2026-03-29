@@ -13,6 +13,8 @@ _BASE_CSS = """\
  * --pm-radius              corner radius on panels
  * --pm-heading-font-weight heading font weight
  * --pm-panel-padding       padding inside panel body and heading
+ * --pm-focused-border-color  border colour on the focused panel
+ * --pm-focused-border-width  border thickness on the focused panel
  */
 
 :root {
@@ -22,6 +24,8 @@ _BASE_CSS = """\
   --pm-radius: 0px;
   --pm-heading-font-weight: bold;
   --pm-panel-padding: 0.5rem;
+  --pm-focused-border-color: #4a9eff;
+  --pm-focused-border-width: 2px;
 }
 
 /* Shell container --------------------------------------------------------- */
@@ -68,6 +72,11 @@ _BASE_CSS = """\
 
 /* Panels ------------------------------------------------------------------ */
 
+.pm-panel[data-pm-focused="true"] {
+  outline: var(--pm-focused-border-width) solid var(--pm-focused-border-color);
+  outline-offset: -1px;
+}
+
 .pm-panel {
   display: flex;
   flex-direction: column;
@@ -105,6 +114,11 @@ def get_base_css() -> str:
     The returned string uses CSS custom properties (variables) for all
     visual values so that embedding applications can theme the shell
     without modifying this stylesheet.
+
+    The focused-panel highlight is controlled by
+    ``--pm-focused-border-color`` and ``--pm-focused-border-width``.
+    These are used by the ``[data-pm-focused="true"]`` rule and are
+    updated live by ``panelmark-web`` after each key event.
 
     Suggested usage::
 
