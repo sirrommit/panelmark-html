@@ -32,7 +32,7 @@ or fragment representing the shell's panel structure.
 | Package | Role |
 |---------|------|
 | **panelmark-html** | Static structure: panel layout, borders, headings, stable DOM hooks |
-| **panelmark-web** | Live layer: browser events, interaction rendering, server sessions |
+| **panelmark-web** | Live layer: WebSocket sessions, browser events, interaction rendering, draw-command updates |
 
 `panelmark-web` depends on `panelmark-html` for its rendered structure. The
 DOM hooks and CSS classes defined here are the stable contract between the two
@@ -62,3 +62,52 @@ features may still evolve.
 `panelmark-web` and are documented as such in
 [docs/hook-contract.md](docs/hook-contract.md).  These will not change
 without a major version bump.
+
+## Quick start
+
+```python
+from panelmark import Shell
+from panelmark_html import render_fragment, get_base_css
+
+LAYOUT = """
+|=== <bold>My App</> ===|
+|{$main$            }|
+|==================|
+|{2R $status$       }|
+|==================|
+"""
+
+shell = Shell(LAYOUT)
+html = render_fragment(shell)
+# Panel bodies are empty — fill them with panelmark-web or your own renderer.
+print(html)
+```
+
+For a complete HTML document including base CSS:
+
+```python
+document = render_document(shell)
+# Returns a full <html>...<body>...</body></html> string with embedded CSS.
+```
+
+## API
+
+| Symbol | Description |
+|--------|-------------|
+| `render_fragment(shell)` | Renders the shell as an HTML fragment (no `<html>` or `<head>` wrapper). Returns a string. |
+| `render_document(shell)` | Renders the shell as a complete HTML document, including the base CSS inline. Returns a string. |
+| `get_base_css()` | Returns the base CSS string for manual inclusion in your own template. |
+| `HTMLRenderer` | Low-level renderer class. Use this for custom integration or when you need per-region control. |
+
+All symbols are importable from `panelmark_html`. Full API reference:
+[panelmark-html rendering API](https://github.com/sirrommit/panelmark-docs/blob/main/docs/panelmark-html/rendering-api.md)
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Hook Contract](docs/hook-contract.md) | Stable DOM interface: element structure, CSS classes, `data-pm-*` attributes, CSS custom properties. **Canonical location — this repo.** |
+| [Rendering API Reference](https://github.com/sirrommit/panelmark-docs/blob/main/docs/panelmark-html/rendering-api.md) | Full reference for `render_fragment`, `render_document`, `get_base_css`, and `HTMLRenderer` |
+| [Ecosystem Overview](https://github.com/sirrommit/panelmark-docs/blob/main/docs/ecosystem.md) | How panelmark-html fits into the panelmark package ecosystem |
+| [Shell Language](https://github.com/sirrommit/panelmark-docs/blob/main/docs/shell-language/overview.md) | ASCII-art layout syntax reference |
+| [panelmark-web](https://github.com/sirrommit/panelmark-web) | Live web runtime that builds on this package's hook contract |

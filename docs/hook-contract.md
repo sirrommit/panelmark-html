@@ -1,3 +1,8 @@
+> **Canonical location.** This document lives in the `panelmark-html` repository
+> and is the authoritative hook contract. The
+> [panelmark-docs site](https://github.com/sirrommit/panelmark-docs/blob/main/docs/panelmark-html/hook-contract.md)
+> mirrors this file. If the two differ, this copy takes precedence.
+
 # panelmark-html Hook Contract
 
 This document defines the stable interface between `panelmark-html` and
@@ -269,3 +274,11 @@ body.innerHTML = renderInteractionHTML(interactionClass, state);
 
 This pattern is stable across all `panelmark-html` releases that follow this
 contract.
+
+---
+
+## See also
+
+- [Rendering API](rendering-api.md)
+- [panelmark-html Overview](overview.md)
+- [panelmark-web Hook Usage](../panelmark-web/hook-usage.md)
