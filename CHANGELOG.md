@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.2.0] — 2026-04-05
+
 ### Added
 
 - HSplit border rendering: `|---|` and `|===|` separator lines between panels
@@ -58,5 +62,6 @@ Initial release.
 - Snapshot tests (`tests/test_snapshots.py`) and CSS tests (`tests/test_css.py`).
 - Example scripts (`examples/`) with rendered output in `examples/out/`.
 
-[Unreleased]: https://github.com/sirrommit/panelmark-html/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/sirrommit/panelmark-html/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/sirrommit/panelmark-html/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/sirrommit/panelmark-html/releases/tag/v0.1.0

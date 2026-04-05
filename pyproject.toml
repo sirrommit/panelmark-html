@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "panelmark-html"
-version = "0.1.0"
+version = "0.2.0"
 description = "Static HTML/CSS renderer for panelmark shells."
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Timothy Morris PhD", email = "sirrommit@gmail.com" }]
 requires-python = ">=3.10"
-dependencies = ["panelmark>=0.1.0"]
+dependencies = ["panelmark>=0.2.0"]
 keywords = ["ui", "layout", "html", "renderer", "panelmark"]
 classifiers = [
     "Development Status :: 3 - Alpha",
