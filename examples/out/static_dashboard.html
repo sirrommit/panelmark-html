@@ -19,6 +19,8 @@
  * --pm-radius              corner radius on panels
  * --pm-heading-font-weight heading font weight
  * --pm-panel-padding       padding inside panel body and heading
+ * --pm-focused-border-color  border colour on the focused panel
+ * --pm-focused-border-width  border thickness on the focused panel
  */
 
 :root {
@@ -28,6 +30,8 @@
   --pm-radius: 0px;
   --pm-heading-font-weight: bold;
   --pm-panel-padding: 0.5rem;
+  --pm-focused-border-color: #4a9eff;
+  --pm-focused-border-width: 2px;
 }
 
 /* Shell container --------------------------------------------------------- */
@@ -72,7 +76,45 @@
   border-left: var(--pm-border-width) solid var(--pm-border-color);
 }
 
+/* HSplit border lines ----------------------------------------------------- */
+
+.pm-border {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pm-border-single {
+  border-top: var(--pm-border-width) solid var(--pm-border-color);
+}
+
+.pm-border-double {
+  border-top: 3px double var(--pm-border-color);
+}
+
+.pm-border-title {
+  font-size: 0.85em;
+  padding: 0 0.5em;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Suppress the generic sibling rule when an explicit pm-border is present */
+.pm-split-h > .pm-border,
+.pm-split-h > .pm-border + * {
+  border-top: none;
+}
+
 /* Panels ------------------------------------------------------------------ */
+
+.pm-panel[data-pm-focused="true"] {
+  outline: var(--pm-focused-border-width) solid var(--pm-focused-border-color);
+  outline-offset: -1px;
+}
 
 .pm-panel {
   display: flex;
@@ -103,7 +145,6 @@
   overflow: auto;
 }
 
-html, body { height: 100%; margin: 0; }
     </style>
 </head>
 <body>
@@ -112,44 +153,16 @@ html, body { height: 100%; margin: 0; }
     <div class="pm-split pm-split-h">
       <div class="pm-split pm-split-v">
         <section class="pm-panel" data-pm-region="nav" data-pm-kind="panel" id="pm-region-nav" data-pm-empty="true">
-          <div class="pm-panel-body">
-            <p style="margin:0 0 0.5rem;font-weight:bold;color:#555;">Navigation</p>
-            <ul style="list-style:none;padding:0;margin:0;line-height:2;">
-              <li>▶ Overview</li>
-              <li>  Charts</li>
-              <li>  Reports</li>
-              <li>  Users</li>
-              <li>  Settings</li>
-            </ul>
-          </div>
+          <div class="pm-panel-body"></div>
         </section>
         <section class="pm-panel" data-pm-region="content" data-pm-kind="panel" id="pm-region-content" data-pm-empty="true">
-          <div class="pm-panel-body">
-            <p style="margin:0 0 0.75rem;font-weight:bold;">Overview</p>
-            <table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
-              <thead>
-                <tr style="border-bottom:1px solid #ccc;">
-                  <th style="text-align:left;padding:0.25rem 0.5rem;">Metric</th>
-                  <th style="text-align:right;padding:0.25rem 0.5rem;">Today</th>
-                  <th style="text-align:right;padding:0.25rem 0.5rem;">7-day avg</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td style="padding:0.2rem 0.5rem;">Page views</td><td style="text-align:right;padding:0.2rem 0.5rem;">14,302</td><td style="text-align:right;padding:0.2rem 0.5rem;">11,840</td></tr>
-                <tr><td style="padding:0.2rem 0.5rem;">Sessions</td><td style="text-align:right;padding:0.2rem 0.5rem;">3,891</td><td style="text-align:right;padding:0.2rem 0.5rem;">3,210</td></tr>
-                <tr><td style="padding:0.2rem 0.5rem;">New users</td><td style="text-align:right;padding:0.2rem 0.5rem;">612</td><td style="text-align:right;padding:0.2rem 0.5rem;">580</td></tr>
-                <tr><td style="padding:0.2rem 0.5rem;">Bounce rate</td><td style="text-align:right;padding:0.2rem 0.5rem;">38%</td><td style="text-align:right;padding:0.2rem 0.5rem;">41%</td></tr>
-                <tr><td style="padding:0.2rem 0.5rem;">Avg session</td><td style="text-align:right;padding:0.2rem 0.5rem;">2m 14s</td><td style="text-align:right;padding:0.2rem 0.5rem;">1m 58s</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <div class="pm-panel-body"></div>
         </section>
       </div>
+      <div class="pm-border pm-border-double"></div>
       <div class="pm-split pm-split-h">
         <section class="pm-panel" data-pm-region="status" data-pm-kind="panel" id="pm-region-status" data-pm-empty="true">
-          <div class="pm-panel-body" style="display:flex;align-items:center;">
-            ✔ Data refreshed at 07:38 UTC — 14,302 events loaded — all systems nominal
-          </div>
+          <div class="pm-panel-body"></div>
         </section>
       </div>
     </div>

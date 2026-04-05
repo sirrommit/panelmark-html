@@ -70,6 +70,39 @@ _BASE_CSS = """\
   border-left: var(--pm-border-width) solid var(--pm-border-color);
 }
 
+/* HSplit border lines ----------------------------------------------------- */
+
+.pm-border {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pm-border-single {
+  border-top: var(--pm-border-width) solid var(--pm-border-color);
+}
+
+.pm-border-double {
+  border-top: 3px double var(--pm-border-color);
+}
+
+.pm-border-title {
+  font-size: 0.85em;
+  padding: 0 0.5em;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Suppress the generic sibling rule when an explicit pm-border is present */
+.pm-split-h > .pm-border,
+.pm-split-h > .pm-border + * {
+  border-top: none;
+}
+
 /* Panels ------------------------------------------------------------------ */
 
 .pm-panel[data-pm-focused="true"] {

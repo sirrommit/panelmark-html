@@ -1,6 +1,6 @@
 from html import escape
 
-from panelmark.layout import HSplit, VSplit, Panel
+from panelmark.layout import HSplit, VSplit, Panel, BorderRow
 
 from .css import get_base_css
 
@@ -116,15 +116,33 @@ class HTMLRenderer:
 
         if isinstance(node, HSplit):
             top = self._render_node(node.top, shell, indent + 2)
+            border = ''
+            if (node.border is not None
+                    and node.top is not None
+                    and node.bottom is not None):
+                border = self._render_border(node.border, indent + 2)
             bottom = self._render_node(node.bottom, shell, indent + 2)
             return (
                 f'{pad}<div class="pm-split pm-split-h">\n'
                 f'{top}'
+                f'{border}'
                 f'{bottom}'
                 f'{pad}</div>\n'
             )
 
         return ''
+
+    def _render_border(self, border: BorderRow, indent: int = 0) -> str:
+        pad = ' ' * indent
+        style_class = 'pm-border-double' if border.style == 'double' else 'pm-border-single'
+        if border.title:
+            inner = ' ' * (indent + 2)
+            return (
+                f'{pad}<div class="pm-border {style_class}">\n'
+                f'{inner}<span class="pm-border-title">{escape(border.title)}</span>\n'
+                f'{pad}</div>\n'
+            )
+        return f'{pad}<div class="pm-border {style_class}"></div>\n'
 
     def _render_panel(self, node: Panel, shell, indent: int = 0) -> str:
         pad = ' ' * indent

@@ -27,6 +27,8 @@
      * --pm-radius              corner radius on panels
      * --pm-heading-font-weight heading font weight
      * --pm-panel-padding       padding inside panel body and heading
+     * --pm-focused-border-color  border colour on the focused panel
+     * --pm-focused-border-width  border thickness on the focused panel
      */
     
     :root {
@@ -36,6 +38,8 @@
       --pm-radius: 0px;
       --pm-heading-font-weight: bold;
       --pm-panel-padding: 0.5rem;
+      --pm-focused-border-color: #4a9eff;
+      --pm-focused-border-width: 2px;
     }
     
     /* Shell container --------------------------------------------------------- */
@@ -80,7 +84,45 @@
       border-left: var(--pm-border-width) solid var(--pm-border-color);
     }
     
+    /* HSplit border lines ----------------------------------------------------- */
+    
+    .pm-border {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    
+    .pm-border-single {
+      border-top: var(--pm-border-width) solid var(--pm-border-color);
+    }
+    
+    .pm-border-double {
+      border-top: 3px double var(--pm-border-color);
+    }
+    
+    .pm-border-title {
+      font-size: 0.85em;
+      padding: 0 0.5em;
+      opacity: 0.7;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    /* Suppress the generic sibling rule when an explicit pm-border is present */
+    .pm-split-h > .pm-border,
+    .pm-split-h > .pm-border + * {
+      border-top: none;
+    }
+    
     /* Panels ------------------------------------------------------------------ */
+    
+    .pm-panel[data-pm-focused="true"] {
+      outline: var(--pm-focused-border-width) solid var(--pm-focused-border-color);
+      outline-offset: -1px;
+    }
     
     .pm-panel {
       display: flex;
@@ -121,37 +163,10 @@
         <div class="pm-split pm-split-h">
           <div class="pm-split pm-split-v">
             <section class="pm-panel" data-pm-region="sidebar" data-pm-kind="panel" id="pm-region-sidebar" data-pm-empty="true">
-              <div class="pm-panel-body">
-                <p style="margin:0 0 0.4rem;color:#888;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Explorer</p>
-                <ul style="list-style:none;padding:0;margin:0;font-size:0.8rem;line-height:1.8;">
-                  <li>📁 panelmark_html/</li>
-                  <li style="padding-left:1rem;">📄 __init__.py</li>
-                  <li style="padding-left:1rem;">📄 renderer.py</li>
-                  <li style="padding-left:1rem;">📄 css.py</li>
-                  <li>📁 tests/</li>
-                  <li style="padding-left:1rem;">📄 test_renderer.py</li>
-                  <li style="padding-left:1rem;">📄 test_css.py</li>
-                  <li style="padding-left:1rem;">📄 test_snapshots.py</li>
-                  <li>📁 examples/</li>
-                  <li>📄 pyproject.toml</li>
-                  <li>📄 README.md</li>
-                </ul>
-              </div>
+              <div class="pm-panel-body"></div>
             </section>
             <section class="pm-panel" data-pm-region="editor" data-pm-kind="panel" id="pm-region-editor" data-pm-empty="true">
-              <div class="pm-panel-body">
-                <div style="font-size:0.8rem;line-height:1.7;color:#333;">
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">1</span><span style="color:#07a;">from</span> panelmark <span style="color:#07a;">import</span> Shell</div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">2</span><span style="color:#07a;">from</span> panelmark_html <span style="color:#07a;">import</span> render_fragment, get_base_css</div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">3</span></div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">4</span>shell = Shell(LAYOUT)</div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">5</span>fragment = render_fragment(shell)</div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">6</span>css = get_base_css()</div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">7</span></div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">8</span><span style="color:#888;"># embed in your framework's template</span></div>
-                  <div><span style="color:#888;user-select:none;margin-right:1rem;">9</span><span style="color:#07a;">return</span> render_template(<span style="color:#a50;">"base.html"</span>, shell=fragment, css=css)</div>
-                </div>
-              </div>
+              <div class="pm-panel-body"></div>
             </section>
           </div>
         </div>
